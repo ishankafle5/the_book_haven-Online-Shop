@@ -1,0 +1,19 @@
+{% extends 'shop/base.html' %}
+{% block content %}
+<h1 class="text-center">Hello</h1>
+<hr>
+<div class="row">
+    {% for eachproduct in product %}
+
+    <div class="col-md-4" style="border: 1px solid;">
+
+        <h3><a href=" {% url 'shopapp:productdetails' eachproduct.slug %} ">{{eachproduct.title}}</a></h3>
+        <img src="{{eachproduct.image.url}}" alt="img" width="100" height="100">
+        <p>Price: Rs <strike>{{ eachproduct.marked_price }}</strike>{{eachproduct.selling_price}}</p>
+        <a href="#" class="btn btn-info">Add to cart</a>
+
+
+    </div>
+    {% endfor %}
+</div>
+{% endblock content %}

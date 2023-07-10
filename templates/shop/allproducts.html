@@ -1,0 +1,20 @@
+{% extends 'shop/base.html' %} {% block title %} Category views {% endblock title %}
+
+{% block content%}
+{% for category in category %}
+<div class="row" style="border: 2px solid red;">
+    <h4> {{category.title}}
+    </h4>
+    {% for product in category.product_set.all %}
+    <div class="col-md-3">
+
+        <h5> {{ product.title }}</h5>
+        <img src="{{ product.image.url }}" alt="" width="200px">
+    </div>
+
+    {% endfor %}
+
+</div>
+{% endfor %}
+
+{% endblock content%}
