@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'product_shop'
+    'product_shop',
+    'taggit',
+
 ]
 
 MIDDLEWARE = [
@@ -65,7 +67,11 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries': {
+                'my_tags': 'product_shop.tags.my_tags',
         },
+        },
+
     },
 ]
 

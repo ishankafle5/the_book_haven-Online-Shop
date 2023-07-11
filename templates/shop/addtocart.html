@@ -1,4 +1,6 @@
+
 {% extends 'shop/base.html' %}
+{% load my_tags %}
 
 {% block title %}
 Add to Cart
@@ -6,8 +8,14 @@ Add to Cart
 
 {% block content %}
 <h1>Your Carts</h1>
-{{carts.id}}
-{% for cart in carts.cart_products %}
-{{cart.id}}
-{% endfor %}
+    {% for cart in carts %}
+    
+    <h2>{{cart.product.title}}</h2>
+    <h2>Quantity: {{cart.quantity}}</h3>
+        <h2>Rate: {{cart.rate}}</h2>
+        <p>Total Price: {{cart.sub_total}}</p>
+
+        {% endfor %}
+        {{carts|first_item}}
+
 {% endblock content %}

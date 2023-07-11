@@ -80,11 +80,17 @@ class AddToCart(TemplateView):
                     quantity=1,
                     sub_total=product_obj.selling_price
                 )
+
             cart = Cart.objects.get(id=cart_id)
+            cartproduct = CartProducts.objects.filter(cart=cart_id)
+            total_price = 0
+            for i in cartproduct:
+                total_price += (i.sub_total)
+            cart.total = total_price
+            cart.save()
+            cart = CartProducts.objects.filter(cart=cart_id)
             context['carts'] = cart
-            # for i in cart_items:
-            #     for i in i.cart_products:
-            #         print(i)
+            print("Now")
             return context  # print(update_productqunatity)
         else:
             cart_obj = Cart.objects.create(total=0)
@@ -99,8 +105,7 @@ class AddToCart(TemplateView):
 
             cart_obj.total += product_obj.selling_price
             cart_obj.save()
-            cart_data = Cart.objects.all()
             cart_items = Cart.objects.get(id=cart_obj.id)
-
+            cart_items = CartProducts.objects.filter(cart=cart_items)
             context['carts'] = cart_items
             return context
