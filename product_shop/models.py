@@ -2,8 +2,6 @@ from datetime import datetime
 from django.db import models
 from django.contrib.auth.models import User
 
-# Create your models here.
-
 
 def upload_to(instance, filname):
     current_time = datetime.now()
@@ -27,6 +25,7 @@ class Category(models.Model):
 
 class Product(models.Model):
     title = models.CharField(max_length=150)
+    quantity = models.IntegerField(default=0)
     slug = models.SlugField()
     marked_price = models.PositiveIntegerField()
     selling_price = models.PositiveIntegerField()
@@ -45,6 +44,7 @@ class Cart(models.Model):
         Customer, on_delete=models.SET_NULL, null=True, blank=True)
     total = models.PositiveBigIntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
+    ordered = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.id)

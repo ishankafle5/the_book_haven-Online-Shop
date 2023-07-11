@@ -68,7 +68,6 @@ class AddToCart(TemplateView):
                     object.quantity += 1
                     object.sub_total = object.quantity*object.rate
                     object.save()
-                print("This is the object product quantity")
             else:
                 cart_obj = Cart.objects.get(id=cart_id)
                 print("This is card id")
@@ -80,7 +79,6 @@ class AddToCart(TemplateView):
                     quantity=1,
                     sub_total=product_obj.selling_price
                 )
-
             cart = Cart.objects.get(id=cart_id)
             cartproduct = CartProducts.objects.filter(cart=cart_id)
             total_price = 0
@@ -109,3 +107,32 @@ class AddToCart(TemplateView):
             cart_items = CartProducts.objects.filter(cart=cart_items)
             context['carts'] = cart_items
             return context
+
+
+class CheckOut(TemplateView):
+    template_name = 'shop/checkoutpage.html'
+
+    def get_context_data(self, **kwargs):
+        cart_id = self.request.session.get('cart_id')
+
+        context = super().get_context_data(**kwargs)
+        cartobject = Cart.objects.get(id=cart_id)
+
+        cartproduct = CartProducts.objects.filter(cart=cartobject)
+
+        print(cartproduct)
+        productobj = Product.objects.all()
+
+        for i in cartproduct:
+           quantity = i.product.quantity
+           proid = i.product.id
+
+           for i in productobj:
+               if i.id == proid:
+                   i.quantity = i.quantity-quantity
+                   productobj.save()
+        productobj.save()
+
+        cartobject.ordered = True
+        cartobject.save()
+        return context
