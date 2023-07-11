@@ -41,12 +41,13 @@ class Product(models.Model):
 
 
 class Cart(models.Model):
-    user = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        Customer, on_delete=models.SET_NULL, null=True, blank=True)
     total = models.PositiveBigIntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.Name
+        return str(self.id)
 
 
 class CartProducts(models.Model):
@@ -56,8 +57,8 @@ class CartProducts(models.Model):
     quantity = models.PositiveIntegerField()
     sub_total = models.PositiveIntegerField()
 
-    def __str__(self):
-        return self.cart
+    # def __str__(self):
+    #     return self.
 
 
 ORDER_STATUS = (

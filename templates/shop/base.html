@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,6 +14,10 @@
 
 <body>
     <nav>
+        <div class="imagecontent">
+            <img src="{% static 'staticimages/logo.png' %}" alt="Images">
+        </div>
+
         <ul>
             <li>
                 <a href="{% url 'shopapp:home' %}">Home</a>
@@ -20,7 +26,10 @@
                 <a href="">Blog</a>
             </li>
             <li>
-                <a href="">ABout Us</a>
+                <a href="">About Us</a>
+                </li>
+                <li>
+                    <a href="">Contact Us</a>
             </li>
             <li>
                 <a href="{% url 'shopapp:allproducts' %}">All Products</a>

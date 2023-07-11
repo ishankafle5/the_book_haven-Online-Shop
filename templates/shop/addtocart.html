@@ -1,0 +1,13 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}
+Add to Cart
+{% endblock title %}
+
+{% block content %}
+<h1>Your Carts</h1>
+{{carts.id}}
+{% for cart in carts.cart_products %}
+{{cart.id}}
+{% endfor %}
+{% endblock content %}
