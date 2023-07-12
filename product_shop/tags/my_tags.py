@@ -11,3 +11,8 @@ def first_item(items):
 @register.filter
 def card_Iid(items):
     return items[0].cart.id
+
+
+@register.filter
+def return5items(items):
+    return items[0:5]

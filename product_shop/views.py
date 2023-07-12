@@ -45,16 +45,18 @@ class EachProducts(TemplateView):
 
         return context
 
+#    count = 10
+
+#     for i in range(121, 125):
+#         obj = Category.objects.get(title='Biography')
+
+#         Product.objects.create(title=f'Product{i}', quantity=10, slug=f'product{i}', marked_price=4000, selling_price=3000,
+#                                description="ksfdjksjdflksjfsldsdf dsfsdjlfjsd sdlfjsdlkf sdf jsdklfj sdklf jsdkfl jsdlffjsdf", warranty="No", return_policy='! years', category=obj, image="productimage/2023-07-12_233855.5902096a444ade0495480250d0f2fb0d498f47.jpg")
+#         count += 14
+
 
 class AddToCart(TemplateView):
-    count = 10
 
-    for i in range(99, 110):
-        obj = Category.objects.get(title='Horror')
-
-        Product.objects.create(title=f'Product{i}', quantity=10, slug=f'product{i}', marked_price=4000, selling_price=3000,
-                               description="ksfdjksjdflksjfsldfjsdf", warranty="No", return_policy='! years', category=obj, image="")
-        count += 14
     template_name = 'shop/addtocart.html'
 
     def get_context_data(self, **kwargs):

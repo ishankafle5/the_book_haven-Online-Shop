@@ -1,4 +1,5 @@
 {% extends 'shop/base.html' %} {% block title %} Category views {% endblock title %}
+{% load my_tags %}
 
 {% block content%}
 {% for category in category %}
@@ -8,7 +9,7 @@
     
     <div class="products-show">
 
-    {% for eachproduct in category.product_set.all %}
+    {% for eachproduct in category.product_set.all|return5items %}
         <div class="eachproducts">
             <div class="imageofproduct">
                 <img src="{{eachproduct.image.url}}" alt="img">
@@ -24,6 +25,7 @@
         </div>
 
     {% endfor %}
+    <button>See All <button>
 </div>
 
 </div>
