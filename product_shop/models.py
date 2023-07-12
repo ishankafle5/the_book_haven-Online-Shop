@@ -39,6 +39,8 @@ class Product(models.Model):
         return self.title
 
 
+
+
 class Cart(models.Model):
     user = models.ForeignKey(
         Customer, on_delete=models.SET_NULL, null=True, blank=True)

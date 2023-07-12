@@ -21,7 +21,8 @@
         <p>{{product.description}}</p>
 
         <div class="description-buttons">
-            <button>Add To Cart</button>
+            <button>        <a href={% url 'shopapp:addtocart' product.id %} class="addtocart">Add to cart</a>
+            </button>
             <button>Back</button>
         </div>
     </div>
