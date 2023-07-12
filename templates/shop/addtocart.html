@@ -14,8 +14,25 @@ Add to Cart
     <h2>Quantity: {{cart.quantity}}</h3>
         <h2>Rate: {{cart.rate}}</h2>
         <p>Total Price: {{cart.sub_total}}</p>
-
+        <div class="increase-decrease">
+            <input onchange="increment('quantityof{{cart.product.id}}')" onsubmit="ksdfjl" type="number"
+                max="{{cart.product.quantity}}" min="0" value="1">
+            quantityof{{cart.product.id}}
+        </div>
         {% endfor %}
         {{carts|first_item}}
 <a href="{% url 'shopapp:cardid' carts|card_Iid %}">CheckOut</a>
+<script>
+    function increment(value) {
+        let newvalue = value.toString();
+
+
+        console.log(value)
+        let quantity = document.getElementById("quantity" + newvalue);
+        console.log(quantity)
+
+        // console.log(quantity)
+
+    }
+</script>
 {% endblock content %}

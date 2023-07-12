@@ -70,7 +70,7 @@ ORDER_STATUS = (
 
 class Order(models.Model):
     cart = models.OneToOneField(Cart, on_delete=models.CASCADE)
-    ordered_by = models.CharField(max_length=200)
+    ordered_by = models.CharField(max_length=200,)
     shipping_address = models.CharField(max_length=200)
     mobile = models.CharField(max_length=15)
     email = models.EmailField(blank=True, null=True)

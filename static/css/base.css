@@ -3,3 +3,238 @@
     padding:0;
     box-sizing:border-box;
 }
+.logo img{
+    width: 100px;
+}
+
+nav {
+    display: flex;
+    height: 80px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 3% 0 8%;
+    background:  #800080;
+    
+}
+
+/* .rightside{
+    display: ;
+    float: right;
+} */
+
+nav .rightside{
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+}
+nav ul li{
+    display: inline-block;
+    margin:0 20px;
+}
+
+nav ul li a{
+    color: white;
+    text-transform: uppercase;
+    line-height: 25px;
+    text-align: left;
+    white-space: nowrap;
+    text-decoration: none;
+}
+.serch input,button{
+    box-sizing: border-box;
+    border: 0 solid #000;
+    height: 25px;
+
+
+}
+.serch input:focus{
+    box-sizing: border-box;
+    border: 0 solid #000;
+}
+
+.serch button{
+    padding: 0 5px 0 5px;
+    border-radius: 4px;
+}
+
+
+
+
+.homepage{
+    background-size: cover;
+    background-repeat: no-repeat;
+    /* height: 100px; */
+}
+
+.image{
+    position: absolute;
+    top: -120px;
+    z-index: -10;
+
+}
+.image img{
+    width: 100%;
+}
+
+.smallcontainer{
+    /* width: 100%; */
+    display: flex;
+    align-items: center;
+    padding: 200px 0;
+    padding: auto 0;
+    gap: 20%;
+    justify-content: center ;
+    /* margin: 0 auto; */
+}
+
+.insidecontainer{
+    background: rgba(255, 255, 255, 0.541);
+    width: 30%;
+    padding: 3% 4%;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    /* box-shadow: 0px 2px 2px 5px #fcfcfc; */
+
+}
+.insidecontainer h2{
+    color: #000;
+    font-size: 30px;
+    font-weight: 600;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.insidecontainer p{
+    color: #000;
+    font-size: 15px;
+    font-weight: 400;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.insidecontainer button{
+    border: 0px solid #000;
+    box-sizing: border-box;
+    padding: 0 4px;
+    width: 180px;
+    margin: 30px 0;
+    /* height: 30px; */
+    color: black;
+     border-radius: 10px;
+     background: #c41dc4;
+     font-size: 15px;
+     /* font-size: 20px; */
+}
+
+.insidecontainer button 
+{
+    display: flex;
+align-items: center;
+justify-content: center;
+  padding: 20px 30px;
+  font-size: 20px;
+  text-align: center;
+  cursor: pointer;
+  color: #fff;
+  background-color: #0ca5bc;
+  border-radius: 20px;
+  box-shadow: 0 10px #999;
+}
+
+.button:hover {background-color: #007095}
+
+.button:active {
+  background-color: #007095;
+  box-shadow: 0 5px rgb(25, 25, 25);
+  transform: translateY(5px);
+}
+
+.products-show{
+    display: flex;
+    flex-wrap:wrap;
+    justify-content: center;
+    gap:20px;
+    
+
+}
+
+.products-show .eachproducts{
+    display: flex;
+    flex-direction:column;
+    width: 230px;
+    /* height: 500px; */
+    /* justify-content: center; */
+    align-items: center;
+    /* overflow:hidden; */
+    margin:20px;
+    border: 1px solid #000;
+    padding:10px;
+}
+
+.eachproducts img{
+    height: 200px;
+}
+
+.imageofproduct{
+    height: 200px;
+}
+
+.product-title{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    height: 30px;
+    
+}
+
+.product-title a{
+    /* text-align: justify; */
+    text-decoration: none;
+    color: black;
+    font-size:17px;
+    
+}
+.product-title a:hover{
+    color:     #3e8afa    ;
+}
+
+.eachproducts  .addtocart{
+   
+        background-color: #e6e6fa;
+        color: #000000;
+        border: 1px solid #e6e6fa;
+        padding: 10px 20px;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+      }
+      
+      /* Apply hover effect */
+      .addtocart:hover {
+        background-color: #d8d8f9;
+      }
+
+
+      .eachproducts p strike{
+        color: red;
+      }
+
+      .eachproducts{
+        position: relative;
+      }
+
+     .eachproducts .real-price {
+        margin-top: 10px;
+        width: 80%;
+        font-size:20px;
+        color: purple;
+        font-weight: 600;
+     }
+     .eachproducts .strick-price{
+       font-size:13px;
+       width: 78%;; 
+       font-weight: 550;
+     }

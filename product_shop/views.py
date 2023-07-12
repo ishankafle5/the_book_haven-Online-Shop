@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 # Create your views here.
 from .models import Cart, CartProducts, Product, Category
-
+from .forms import OrderForm
 
 class HomeView(TemplateView):
     template_name = 'shop/home.html'
@@ -109,6 +109,10 @@ class AddToCart(TemplateView):
             return context
 
 
+class CheckoutForm(TemplateView):
+    template_name = 'shop/checkoutpage.html'
+
+
 class CheckOut(TemplateView):
     template_name = 'shop/checkoutpage.html'
 
@@ -121,18 +125,16 @@ class CheckOut(TemplateView):
         cartproduct = CartProducts.objects.filter(cart=cartobject)
 
         print(cartproduct)
-        productobj = Product.objects.all()
 
         for i in cartproduct:
-           quantity = i.product.quantity
-           proid = i.product.id
 
-           for i in productobj:
-               if i.id == proid:
-                   i.quantity = i.quantity-quantity
-                   productobj.save()
-        productobj.save()
+            products = Product.objects.get(id=i.product.id)
+            print("THis is products id")
+            print(i.product.id)
+            print(products)
+            products.quantity = products.quantity-i.quantity
 
+            products.save()
         cartobject.ordered = True
         cartobject.save()
         return context

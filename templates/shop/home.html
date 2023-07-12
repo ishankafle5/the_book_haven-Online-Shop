@@ -1,19 +1,34 @@
 {% extends 'shop/base.html' %}
+{% load static %}
 {% block content %}
-<h1 class="text-center">Hello</h1>
-<hr>
-<div class="row">
+<div class="homepage">
+    <div class="smallcontainer">
+        <div class="insidecontainer">
+            <h2>Best Sellersw</h2>
+            <p>Browse From Best Sellers with Best Discounts!</p>
+            <button>Shop&nbsp;Now</button>
+        </div>
+    </div>
+    <div class="image">
+        <img src="{% static 'staticimages/bgimage.webp' %}" alt="">
+    </div>
+</div>
+<h1>Products</h1>
+
+<div class="products-show">
     {% for eachproduct in product %}
-
-    <div class="col-md-4" style="border: 1px solid;">
-
-        <h3><a href=" {% url 'shopapp:productdetails' eachproduct.slug %} ">{{eachproduct.title}}</a></h3>
-        <h5>{{ eachproduct.quantity }}</h5>
-        <img src="{{eachproduct.image.url}}" alt="img" width="100" height="100">
-        <p>Price: Rs <strike>{{ eachproduct.marked_price }}</strike>{{eachproduct.selling_price}}</p>
-        <a href={% url 'shopapp:addtocart' eachproduct.id %} class="btn btn-info">Add to cart</a>
-
-
+    <div class="eachproducts">
+        <div class="imageofproduct">
+            <img src="{{eachproduct.image.url}}" alt="img">
+        </div>
+        <br><br>
+        <div class="product-title">
+            <a href=" {% url 'shopapp:productdetails' eachproduct.slug %} ">{{eachproduct.title}}</a>
+        </div>
+        <p class="real-price">Rs. {{eachproduct.selling_price}}</p>
+        <p class="strick-price"> <strike>Rs: {{ eachproduct.marked_price }}</strike></p>
+        <br>
+        <a href={% url 'shopapp:addtocart' eachproduct.id %} class="addtocart">Add to cart</a>
     </div>
     {% endfor %}
 </div>
