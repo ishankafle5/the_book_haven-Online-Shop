@@ -5,14 +5,26 @@
 <div class="row" style="border: 2px solid red;">
     <h4> {{category.title}}
     </h4>
-    {% for product in category.product_set.all %}
-    <div class="col-md-3">
+    
+    <div class="products-show">
 
-        <h5> {{ product.title }}</h5>
-        <img src="{{ product.image.url }}" alt="" width="200px">
-    </div>
+    {% for eachproduct in category.product_set.all %}
+        <div class="eachproducts">
+            <div class="imageofproduct">
+                <img src="{{eachproduct.image.url}}" alt="img">
+            </div>
+            <br><br>
+            <div class="product-title">
+                <a href=" {% url 'shopapp:productdetails' eachproduct.slug %} ">{{eachproduct.title}}</a>
+            </div>
+            <p class="real-price">Rs. {{eachproduct.selling_price}}</p>
+            <p class="strick-price"> <strike>Rs: {{ eachproduct.marked_price }}</strike></p>
+            <br>
+            <a href={% url 'shopapp:addtocart' eachproduct.id %} class="addtocart">Add to cart</a>
+        </div>
 
     {% endfor %}
+</div>
 
 </div>
 {% endfor %}

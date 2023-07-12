@@ -238,3 +238,41 @@ justify-content: center;
        width: 78%;; 
        font-weight: 550;
      }
+
+     .product-description{
+        display: flex;
+        flex-direction: row;
+        padding: 8% 10%;
+        gap: 100px;
+     }
+
+     .product-description .images{
+        padding: 40px 0px;
+        overflow:visible;
+        /* width: 50px; */
+        height: auto;
+        z-index: 1;
+
+     }
+     .inside-images{
+        overflow: hidden;
+        border: 0 solid #000;
+     }
+     .product-description .images:hover{
+        box-shadow: 0px 0px 1px 1px #726e6e;
+     }
+     .product-description .images img:hover{
+        transform: scale(1.1);
+        transition: .5s;
+
+     }
+
+    
+     .description-buttons button{
+       margin: 20px 20px 0 0;
+       padding: 5px 15px;
+     }
+
+     /* .product-description .images img{
+        height: auto;
+     } */

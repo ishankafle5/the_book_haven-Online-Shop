@@ -5,15 +5,25 @@
 {% endblock title %}
 
 {% block content %}
-<h1>{{ product.title }}
-</h1>
-<div class="row">
-    <div class="col-md-6">
+
+<div class="product-description">
+    <div class="images">
+        <div class="inside-images">
+
         <img src="{{ product.image.url }}" alt="" width="300px">
     </div>
-    <div class="col-md-6">
-        <p>{{product.description}}</p>
+</div>
+<div class="description">
+        <h1>{{ product.title }}
+        </h1>
         <p class="">Price: <strike>{{product.marked_price}}</strike> {{product.selling_price}}</p>
+
+        <p>{{product.description}}</p>
+
+        <div class="description-buttons">
+            <button>Add To Cart</button>
+            <button>Back</button>
+        </div>
     </div>
 
 </div>
