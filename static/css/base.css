@@ -276,3 +276,136 @@ justify-content: center;
      /* .product-description .images img{
         height: auto;
      } */
+
+     .h2-of-category h2{
+       text-align: center;
+       font-size: 30px;
+       padding: 20px;
+       text-decoration: underline;
+     }
+
+     .product-a-tag{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+     }
+
+     .five-products .see-all {
+        text-align: center;
+        font-size: 25px;
+        padding: 5px 20px;
+        text-decoration: underline;
+        margin: 0 auto;
+        background-color: purple;
+        border-radius: 20px;
+        text-decoration: none;
+        color: wheat;
+     } 
+
+     .cart_container{
+        display: flex;
+        flex-direction: column;
+        padding: 40px;
+
+     }
+
+     .eachcarts{
+        display: flex;
+        flex-direction: row;
+        gap: 50px;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        
+     }
+     .eachcarts .eachcarts-image{
+        height: 200px;
+        width: 20%;
+        display: flex;
+        justify-content: center;
+     }
+     .eachcarts-image img{
+        height: 200px;
+     }
+
+     table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-bottom: 1rem;
+      }
+      
+      th, td {
+        padding: 10px;
+        border: 1px solid #ddd;
+      }
+      
+      th {
+        text-align: center;
+        background-color: #f2f2f2;
+      }
+      
+      td {
+        text-align: left;
+      }
+      
+      .eachcarts-image img{
+        /* width: 100px; */
+        height: 200px;
+      }
+      
+      .increase-decrease {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 5px;
+      }
+      .increase-decrease p{
+        padding: 0 5px;
+      }
+      
+      .increase-decrease .increase{
+        /* padding: 0 5px; */
+        background: blue;
+      }
+      
+      .increase-decrease input {
+        width: 50px;
+        height: 30px;
+        border: 1px solid #ddd;
+        padding: 5px;
+      }
+      
+      .increase-decrease .quantityof {
+        margin-left: 5px;
+      }
+
+      .td-image div{
+        display: flex;
+        /* align-items: center; */
+        justify-content: center;
+    }
+
+ 
+  .quantiy-p {
+    box-sizing:border-box;
+    padding: 2px 5px;
+    /* height: 100%; */
+    /* width: 100%; */
+  }
+
+  .increase-decrease button{
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size:30px;
+  }
+
+  .increase-decrease 
+
+   .decrease{
+    background: red;
+    font-size:30px;
+  }
+  

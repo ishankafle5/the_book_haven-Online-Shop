@@ -1,4 +1,3 @@
-
 {% extends 'shop/base.html' %}
 {% load my_tags %}
 
@@ -8,19 +7,77 @@ Add to Cart
 
 {% block content %}
 <h1>Your Carts</h1>
+<div class="cart_container">
+    <table>
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Title</th>
+                <th>Rate</th>
+                <th>Total Price</th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
     {% for cart in carts %}
+    <tbody>
+        <tr>
+            <td class="td-image">
+                <div class="eachcarts-image">
+                    <img src="{{cart.product.image.url}}" alt="">
     
-    <h2>{{cart.product.title}}</h2>
-    <h2>Quantity: {{cart.quantity}}</h3>
-        <h2>Rate: {{cart.rate}}</h2>
-        <p>Total Price: {{cart.sub_total}}</p>
-        <div class="increase-decrease">
-            <input onchange="increment('quantityof{{cart.product.id}}')" onsubmit="ksdfjl" type="number"
-                max="{{cart.product.quantity}}" min="0" value="1">
-            quantityof{{cart.product.id}}
-        </div>
-        {% endfor %}
-        {{carts|first_item}}
+                </div>
+                </td>
+                <td>{{cart.product.title}}</td>
+                <td>{{cart.rate}}</td>
+                <td>{{cart.sub_total}}</td>
+                <td>
+                    <div class="increase-decrease">
+                        <button class="decrease" onclick="decreasebtn('{{cart.id}}')">-</button>
+                        <div class="quantiy-p">
+                            <p id="quantity-number"+{{cart.id}}></p>
+                        </div>
+                        <button class="increase" onclick="increasebtn('{{cart.id}}')">+</button>
+                        </div>
+                        </td>
+                        </tr>
+                        <!-- Add more rows if needed -->
+                        </tbody>
+                        
+                        <script>
+                                {% comment %} var row_data = "{{cart.quantity}}";
+                                if(row_data>=1){
+                                }
+                                else{
+                                    row_data=0                                
+                                }
+                                var quantity_value = 0
+                                document.getElementById("quantity-number").innerText = row_data {% endcomment %}
+                            </script>
+        
+            {% endfor %}
+</table>
+
+<script type="text/javascript">
+
+   
+</script>
+<script>
+   
+    
+    
+    const increasebtn=(id)=>{
+    console.log(id)
+}
+
+const decreasebtn=(id)=>{
+    console.log(id)
+}
+
+</script>
+
+</div>
+
+{{carts|first_item}}
 <a href="{% url 'shopapp:cardid' carts|card_Iid %}">CheckOut</a>
 <script>
     function increment(value) {

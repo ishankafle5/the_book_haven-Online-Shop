@@ -16,3 +16,8 @@ def card_Iid(items):
 @register.filter
 def return5items(items):
     return items[0:5]
+
+
+@register.filter
+def categorytype(items):
+    return items[0].category

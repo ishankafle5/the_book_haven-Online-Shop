@@ -31,6 +31,18 @@ class AllProductView(TemplateView):
         return context
 
 
+class CategoryView(TemplateView):
+    template_name = 'shop/allproducts.html'
+
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        url_slug = self.kwargs['slug']
+
+        category_obj = Category.objects.get(slug=url_slug)
+        product_obj = Product.objects.filter(category=category_obj)
+        context['catproduct'] = product_obj
+        return context
+
 class EachProducts(TemplateView):
     template_name = 'shop/eachproduct.html'
 
@@ -148,3 +160,23 @@ class CheckOut(TemplateView):
         cartobject.ordered = True
         cartobject.save()
         return context
+
+
+class SearchProducts(TemplateView):
+    template_name = 'shop/home.html'
+
+    def post(self, request, *args, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        data = self.request.POST.get('searchfield')
+        print("THi si sdata")
+        print(data)
+
+        # searchedproduct
+
+        searchedproduct = Product.objects.filter(title__icontains=data)
+        context['searchedproduct'] = searchedproduct
+        return context
+
+
+# name__icontains

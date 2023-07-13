@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+        'livereload',
+
     'django.contrib.staticfiles',
     'product_shop',
     'jazzmin',
@@ -51,6 +53,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'livereload.middleware.LiveReloadScript'
+    
 ]
 
 ROOT_URLCONF = 'the_book_haven.urls'
@@ -133,3 +137,8 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static\\'),)
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+MIDDLEWARE_CLASSES=[
+    'livereload.middleware.LiveReloadScript'
+]

@@ -1,6 +1,27 @@
 {% extends 'shop/base.html' %}
 {% load static %}
 {% block content %}
+
+{% if searchedproduct %}
+<div class="products-show">
+    {% for eachproduct in searchedproduct %}
+    <div class="eachproducts">
+        <div class="imageofproduct">
+            <img src="{{eachproduct.image.url}}" alt="img">
+        </div>
+        <br><br>
+        <div class="product-title">
+            <a href=" {% url 'shopapp:productdetails' eachproduct.slug %} ">{{eachproduct.title}}</a>
+        </div>
+        <p class="real-price">Rs. {{eachproduct.selling_price}}</p>
+        <p class="strick-price"> <strike>Rs: {{ eachproduct.marked_price }}</strike></p>
+        <br>
+        <a href={% url 'shopapp:addtocart' eachproduct.id %} class="addtocart">Add to cart</a>
+    </div>
+    {% endfor %}
+</div>
+
+{% else %}
 <div class="homepage">
     <div class="smallcontainer">
         <div class="insidecontainer">
@@ -13,6 +34,7 @@
         <img src="{% static 'staticimages/bgimage.webp' %}" alt="">
     </div>
 </div>
+
 <h1>Products</h1>
 
 <div class="products-show">
@@ -32,4 +54,7 @@
     </div>
     {% endfor %}
 </div>
+{% endif %}
+
+
 {% endblock content %}

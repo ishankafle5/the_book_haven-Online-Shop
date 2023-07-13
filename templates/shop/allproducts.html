@@ -2,14 +2,16 @@
 {% load my_tags %}
 
 {% block content%}
+{% if category %}
 {% for category in category %}
-<div class="row" style="border: 2px solid red;">
-    <h4> {{category.title}}
-    </h4>
-    
+<div class="five-products">
+    <div class="h2-of-category">
+        <h2> {{ category.title}}</h2>
+    </div>
+
     <div class="products-show">
 
-    {% for eachproduct in category.product_set.all|return5items %}
+        {% for eachproduct in category.product_set.all|return5items %}
         <div class="eachproducts">
             <div class="imageofproduct">
                 <img src="{{eachproduct.image.url}}" alt="img">
@@ -23,12 +25,46 @@
             <br>
             <a href={% url 'shopapp:addtocart' eachproduct.id %} class="addtocart">Add to cart</a>
         </div>
-
+        {% endfor %}
+        </div>
+    
+        <div class="product-a-tag">
+            <a class="see-all" href="{% url 'shopapp:categorywise' category.slug %}">See All</a>
+        
+        </div>
+        </div>
+        
+        </div>
+        <div class="height" style="height: 30px;">
+        
+        </div>
+        <hr>
     {% endfor %}
-    <button>See All <button>
+    {% else %}
+    <div class="h2-of-category">
+        <h2> {{catproduct|categorytype }}</h2>
 </div>
 
+<div class="products-show">
+    {% for eachproduct in catproduct %}
+
+    {{catproduct.id}}
+    <div class="eachproducts">
+        <div class="imageofproduct">
+            <img src="{{eachproduct.image.url}}" alt="img">
+        </div>
+        <br><br>
+        <div class="product-title">
+            <a href=" {% url 'shopapp:productdetails' eachproduct.slug %} ">{{eachproduct.title}}</a>
+        </div>
+        <p class="real-price">Rs. {{eachproduct.selling_price}}</p>
+        <p class="strick-price"> <strike>Rs: {{ eachproduct.marked_price }}</strike></p>
+        <br>
+        <a href={% url 'shopapp:addtocart' eachproduct.id %} class="addtocart">Add to cart</a>
+    </div>
+    {% endfor %}
 </div>
-{% endfor %}
+
+{% endif %}
 
 {% endblock content%}
