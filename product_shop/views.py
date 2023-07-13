@@ -81,6 +81,12 @@ class AddToCart(TemplateView):
         cart_id = self.request.session.get('cart_id', None)
 
         if cart_id:
+            template_name = 'shop/checkoutpage.html'
+        
+            form_cart=Cart.objects.get(id=cart_id)
+            total_amt=form_cart.total        
+            form=OrderForm(initial={ 'subtotal':total_amt})
+            context['form']=form
             print("Card id exist")
             print(cart_id)
             print(product_id)
