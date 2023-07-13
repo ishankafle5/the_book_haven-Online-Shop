@@ -1,95 +1,116 @@
-{% extends 'shop/base.html' %}
-{% load my_tags %}
-
-{% block title %}
-Add to Cart
-{% endblock title %}
-
-{% block content %}
+{% extends 'shop/base.html' %} {% load my_tags %} {% block title %} Add to Cart
+{% endblock title %} {% block content %}
 <h1>Your Carts</h1>
 <div class="cart_container">
-    <table>
-        <thead>
-            <tr>
-                <th>Image</th>
-                <th>Title</th>
-                <th>Rate</th>
-                <th>Total Price</th>
-                <th>Quantity</th>
-            </tr>
-        </thead>
+  <table>
+    <thead>
+      <tr>
+        <th>Image</th>
+        <th>Title</th>
+        <th>Rate</th>
+        <th>Total Price</th>
+        <th>Quantity</th>
+      </tr>
+    </thead>
     {% for cart in carts %}
     <tbody>
-        <tr>
-            <td class="td-image">
-                <div class="eachcarts-image">
-                    <img src="{{cart.product.image.url}}" alt="">
-    
-                </div>
-                </td>
-                <td>{{cart.product.title}}</td>
-                <td>{{cart.rate}}</td>
-                <td>{{cart.sub_total}}</td>
-                <td>
-                    <div class="increase-decrease">
-                        <button class="decrease" onclick="decreasebtn('{{cart.id}}')">-</button>
-                        <div class="quantiy-p">
-                            <p id="quantity-number"+{{cart.id}}></p>
-                        </div>
-                        <button class="increase" onclick="increasebtn('{{cart.id}}')">+</button>
-                        </div>
-                        </td>
-                        </tr>
-                        <!-- Add more rows if needed -->
-                        </tbody>
-                        
-                        <script>
-                                {% comment %} var row_data = "{{cart.quantity}}";
-                                if(row_data>=1){
-                                }
-                                else{
-                                    row_data=0                                
-                                }
-                                var quantity_value = 0
-                                document.getElementById("quantity-number").innerText = row_data {% endcomment %}
-                            </script>
-        
-            {% endfor %}
-</table>
+      <tr>
+        <td class="td-image">
+          <div class="eachcarts-image">
+            <img src="{{cart.product.image.url}}" alt="" />
+          </div>
+        </td>
+        <td>{{cart.product.title}}</td>
+        <td>{{cart.rate}}</td>
+        <td id="subtotal_price{{cart.id}}">{{cart.sub_total}}</td>
+        <td>
+          <div class="increase-decrease">
+            <button class="decrease" onclick="decreasebtn('{{cart.id}}')">
+              -
+            </button>
+            <div class="quantiy-p">
+              <p id="quantity-number{{cart.id}}" >{{cart.quantity}}</p>
+            </div>
+            <button class="increase" onclick="increasebtn('{{cart.id}}')">
+              +
+            </button>
+          </div>
+        </td>
+      </tr>
+      <!-- Add more rows if needed -->
+    </tbody>
 
-<script type="text/javascript">
+    <script>
+     
+    </script>
 
-   
-</script>
-<script>
-   
-    
-    
-    const increasebtn=(id)=>{
-    console.log(id)
-}
+    {% endfor %}
+  </table>
 
-const decreasebtn=(id)=>{
-    console.log(id)
-}
+  <script type="text/javascript"></script>
+  <script>
 
-</script>
+    const sendrequest = (card_id, value) => {
+      console.log(card_id);
+      console.log(value);
 
+      var xhr = new XMLHttpRequest();
+      var url = value+"/?card_id="+card_id;
+      console.log(url)
+      var data = {
+
+        'card_id':card_id
+        // Your data to send in the request body
+      };
+
+      xhr.open("GET", url, true);
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+          // Request successful, handle response here
+          var response = JSON.parse(xhr.responseText);
+
+          console.log(response);
+          document.getElementById("quantity-number"+card_id).innerText = response['quantity'];
+          document.getElementById("subtotal_price"+card_id).innerText = response['sub_total'];
+
+        } else if (xhr.readyState === XMLHttpRequest.DONE) {
+          // Request completed but with an error
+          console.error("POST request failed.");
+        }
+      };
+      xhr.send(JSON.stringify());
+    };
+
+
+    const increasebtn = (id) => {
+      console.log(id);
+      sendrequest(id, "/increasequantity");
+    };
+
+    const decreasebtn = (id) => {
+      console.log(id);
+      sendrequest(id, "/decreasequantity");
+    };
+  </script>
 </div>
 
 {{carts|first_item}}
 <a href="{% url 'shopapp:cardid' carts|card_Iid %}">CheckOut</a>
 <script>
-    function increment(value) {
-        let newvalue = value.toString();
+  function increment(value) {
+    let newvalue = value.toString();
 
-
-        console.log(value)
-        let quantity = document.getElementById("quantity" + newvalue);
-        console.log(quantity)
-
-        // console.log(quantity)
-
-    }
+    // console.log(quantity)
+  }
 </script>
+
+
+<div class="main-checkout">
+    <div class="checkoutform">
+        <div class="container">
+          
+        </div>
+      </div>
+</div>
+
 {% endblock content %}

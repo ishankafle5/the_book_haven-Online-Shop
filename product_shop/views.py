@@ -1,9 +1,11 @@
 from typing import Any, Dict
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.views.generic import TemplateView
 # Create your views here.
 from .models import Cart, CartProducts, Product, Category
 from .forms import OrderForm
+from django.views.decorators.csrf import csrf_exempt
 
 class HomeView(TemplateView):
     template_name = 'shop/home.html'
@@ -180,3 +182,49 @@ class SearchProducts(TemplateView):
 
 
 # name__icontains
+
+
+class ChangeQuantity():
+    @csrf_exempt
+    def increase(request):
+        id=request.GET.get('card_id')
+        print(id)
+        print("THis is id")
+        object=CartProducts.objects.get(id=id)
+        object.quantity=object.quantity+1
+        object.save()
+        
+        object=CartProducts.objects.get(id=id)
+        object.sub_total=object.quantity*object.rate
+        object.save()
+        print("Object Length")
+        
+        data={
+            'quantity':object.quantity,
+            'sub_total':object.sub_total
+        }
+        print("Object Length")
+        # return JsonResponse({'quantity': '1000'})
+        return HttpResponse(JsonResponse(data))
+
+
+    @csrf_exempt
+    def decrease(request):
+        id=request.GET.get('card_id')
+        print(id)
+        print("THis is id")
+        object=CartProducts.objects.get(id=id)
+        object.quantity=object.quantity-1
+        object.save()
+        object=CartProducts.objects.get(id=id)
+        object.sub_total=object.quantity*object.rate
+        object.save()
+        print("Object Length")
+        
+        data={
+            'quantity':object.quantity,
+            'sub_total':object.sub_total
+        }
+        return HttpResponse(JsonResponse(data))
+
+        pass
