@@ -439,11 +439,10 @@ td {
   gap:5px;
 }
 
-form p:nth-child(1){
-  position: fixed;
+#id_cart,#id_order_status{
+  display: none;
+} 
 
-  /* margin-left: 300px; */
+.main-checkout{
+  display: none;
 }
-/* .checkoutform .container form p input[type='text']{
-  width: 300px;
-} */

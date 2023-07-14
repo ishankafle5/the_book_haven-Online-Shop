@@ -7,14 +7,18 @@ class OrderForm(forms.ModelForm):
 
     class Meta:
         model = Order
-        fields = ('ordered_by', 'mobile', 'email',
-                  'shipping_address', 'subtotal', 'discount', 'total')
+        # fields = ('ordered_by', 'mobile', 'email',
+        #           'shipping_address', 'subtotal', 'discount', 'total')
+        fields='__all__'
         labels = {
+            'cart':"",
             'ordered_by': "Your Name",
             'mobile': "Your Phone Number",
             'shipping_address': "Your current Address",
             'subtotal': "Amount",
-            'Discount Price': "discount",
-            'Total Price': "total",
+            'discount': "Discount",
+            'total': "Total",
+            'order_status':""
 
-        }
+        }        
+ 

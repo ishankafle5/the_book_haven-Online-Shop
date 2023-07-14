@@ -74,19 +74,16 @@ class AddToCart(TemplateView):
     template_name = 'shop/addtocart.html'
 
     def get_context_data(self, **kwargs):
+        
         context = super().get_context_data(**kwargs)
         product_id = self.kwargs['id']
         product_obj = Product.objects.get(id=product_id)
 
         cart_id = self.request.session.get('cart_id', None)
-
+        
         if cart_id:
             template_name = 'shop/checkoutpage.html'
-        
-            form_cart=Cart.objects.get(id=cart_id)
-            total_amt=form_cart.total        
-            form=OrderForm(initial={ 'subtotal':total_amt})
-            context['form']=form
+
             print("Card id exist")
             print(cart_id)
             print(product_id)
@@ -136,9 +133,28 @@ class AddToCart(TemplateView):
             cart_items = Cart.objects.get(id=cart_obj.id)
             cart_items = CartProducts.objects.filter(cart=cart_items)
             context['carts'] = cart_items
+            
             return context
-
-
+    def post(self,request,id):
+        cart_id=self.request.session['cart_id']
+        print(id)
+        print("Post Method is come")
+        if self.request.method=='POST':
+            
+            cart_id=(self.request.POST.get('cart'))
+            object=Cart.objects.get(id=cart_id)
+            print(request.method)
+            form=OrderForm(self.request.POST)
+            if form.is_valid():
+                form.save()
+                object.delete()
+                return HttpResponse("Success")
+            else:
+                return HttpResponse("form invalid")
+        else:
+            print("Form invalied")
+            return HttpResponse("NOt done")
+        
 class CheckoutForm(TemplateView):
     template_name = 'shop/checkoutpage.html'
 
@@ -159,9 +175,9 @@ class CheckOut(TemplateView):
         for i in cartproduct:
 
             products = Product.objects.get(id=i.product.id)
-            print("THis is products id")
-            print(i.product.id)
-            print(products)
+            # print("THis is products id")
+            # print(i.product.id)
+            # print(products)
             products.quantity = products.quantity-i.quantity
 
             products.save()
@@ -179,9 +195,8 @@ class SearchProducts(TemplateView):
         data = self.request.POST.get('searchfield')
         print("THi si sdata")
         print(data)
-
         # searchedproduct
-
+        
         searchedproduct = Product.objects.filter(title__icontains=data)
         context['searchedproduct'] = searchedproduct
         return context
@@ -234,3 +249,10 @@ class ChangeQuantity():
         return HttpResponse(JsonResponse(data))
 
         pass
+# def returnForm(rsequest):
+
+def returnform(request):
+    cart_id=request.session['cart_id']
+    form=OrderForm()
+    return form
+        # if form.is_valid():form.save()

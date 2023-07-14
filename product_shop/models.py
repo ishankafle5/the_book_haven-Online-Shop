@@ -64,8 +64,8 @@ class CartProducts(models.Model):
 
 
 ORDER_STATUS = (
-    ("Order Receiving", "OR"),
-    ("Order Processing", "OP"),
+    ("Order Receiving", "Order Receiving"),
+    ("Order Processing", "Order Processing"),
     ("On The Way", "On The Way")
 )
 
@@ -79,5 +79,5 @@ class Order(models.Model):
     subtotal = models.PositiveIntegerField()
     discount = models.PositiveIntegerField()
     total = models.PositiveIntegerField()
-    order_status = models.CharField(max_length=150, choices=ORDER_STATUS)
+    order_status = models.CharField(max_length=150, choices=ORDER_STATUS,default='Order Receiving')
     created_at = models.DateTimeField(auto_now=True)

@@ -1,4 +1,5 @@
-{% extends 'shop/base.html' %} {% load my_tags %} {% block title %} Add to Cart
+{% extends 'shop/base.html' %} {% load my_tags %}
+{% block title %} Add to Cart
 {% endblock title %} {% block content %}
 <h1>Your Carts</h1>
 <div class="cart_container">
@@ -95,7 +96,7 @@
 </div>
 
 {{carts|first_item}}
-<a href="{% url 'shopapp:cardid' carts|card_Iid %}">CheckOut</a>
+<button onclick="showCheckout()">CheckOut</button>
 <script>
   function increment(value) {
     let newvalue = value.toString();
@@ -105,15 +106,31 @@
 </script>
 
 
-<div class="main-checkout">
+<div id="main-checkout" class="main-checkout">
   <div class="checkoutform">
       <div class="container">
-          <form>
-              {{form.as_p}}
+          <form method="POST" action="">
+            {% order_form request%}
+            {% csrf_token %}
+            <div class="button-checkout-from">
               <button type="summit">CheckOut</button>
+            <button onclick="hideCheckout()">Back</button>
+            
+            </div>
           </form>
+
       </div>
     </div>
 </div>
+<script type="text/javascript">
+  document.getElementById("id_cart").value = "{{ request.session.cart_id }}"
+  function showCheckout(num) {
+    document.getElementById("main-checkout").style = "display:block";
+  }
+  function hideCheckout() {
+    document.getElementById("main-checkout").style = "display:none";
+
+  }
+</script>
 
 {% endblock content %}

@@ -13,5 +13,5 @@ urlpatterns = [
     path('searched-products/', SearchProducts.as_view(), name='searchproduct'),
     
     path('increasequantity/',ChangeQuantity.increase,name="increase-cart"),
-    path('increasequantity/',ChangeQuantity.decrease,name="decrease-cart")
+    path('decreasequantity/',ChangeQuantity.decrease,name="decrease-cart")
 ]
