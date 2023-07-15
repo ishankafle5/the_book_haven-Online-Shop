@@ -219,10 +219,19 @@ class ChangeQuantity():
         object.sub_total=object.quantity*object.rate
         object.save()
         print("Object Length")
-        
+        # total_amt=Cart.objects.get(id=request.session['cart_id']).total
+        cart_obj=Cart.objects.get(id=request.session['cart_id'])
+        cart_pro_obj=CartProducts.objects.filter(cart=cart_obj)
+        total_amt=0
+        for i in cart_pro_obj:
+            total_amt=i.sub_total+total_amt
+
+        cart_obj.total=total_amt
+        cart_obj.save()
         data={
             'quantity':object.quantity,
-            'sub_total':object.sub_total
+            'sub_total':object.sub_total,
+            'total':total_amt
         }
         print("Object Length")
         # return JsonResponse({'quantity': '1000'})
@@ -242,10 +251,21 @@ class ChangeQuantity():
         object.save()
         print("Object Length")
         
+        cart_obj=Cart.objects.get(id=request.session['cart_id'])
+        cart_pro_obj=CartProducts.objects.filter(cart=cart_obj)
+        total_amt=0
+        for i in cart_pro_obj:
+            total_amt=i.sub_total+total_amt
+
+        cart_obj.total=total_amt
+        cart_obj.save()
+               
         data={
             'quantity':object.quantity,
-            'sub_total':object.sub_total
+            'sub_total':object.sub_total,
+            'total':total_amt
         }
+        
         return HttpResponse(JsonResponse(data))
 
         pass
@@ -253,6 +273,8 @@ class ChangeQuantity():
 
 def returnform(request):
     cart_id=request.session['cart_id']
+    
     form=OrderForm()
     return form
         # if form.is_valid():form.save()
+        

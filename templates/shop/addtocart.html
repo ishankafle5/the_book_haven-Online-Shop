@@ -73,6 +73,7 @@
           console.log(response);
           document.getElementById("quantity-number"+card_id).innerText = response['quantity'];
           document.getElementById("subtotal_price"+card_id).innerText = response['sub_total'];
+               document.getElementById("total_amount").innerHTML=response['total']
 
         } else if (xhr.readyState === XMLHttpRequest.DONE) {
           // Request completed but with an error
@@ -95,8 +96,14 @@
   </script>
 </div>
 
-{{carts|first_item}}
-<button onclick="showCheckout()">CheckOut</button>
+<div class="last-addto-cart">
+  <div class="total_amt">
+    <p>Total Amount : </p>
+    <p class="total_amount" id="total_amount">{{carts|first_item}}
+    </p>
+  </div>
+  <button onclick="showCheckout()">CheckOut</button>
+</div>
 <script>
   function increment(value) {
     let newvalue = value.toString();

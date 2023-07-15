@@ -36,9 +36,7 @@ class Product(models.Model):
     image = models.ImageField(upload_to=upload_to, blank=True, null=True)
 
     def __str__(self):
-        return self.title
-
-
+        return f"{self.title},{str(self.marked_price)},{str(self.selling_price)}"
 
 
 class Cart(models.Model):
@@ -81,3 +79,4 @@ class Order(models.Model):
     total = models.PositiveIntegerField()
     order_status = models.CharField(max_length=150, choices=ORDER_STATUS,default='Order Receiving')
     created_at = models.DateTimeField(auto_now=True)
+
