@@ -16,8 +16,6 @@ urlpatterns = [
     path('decreasequantity/',ChangeQuantity.decrease,name="decrease-cart"),
     path('login/',CustomLoginView.as_view(),name='login'),
     path('logout/',auth_view.LogoutView.as_view(),name='logout'),
-    path('signup/',user_signup,name='signup'),
-    # path('checkout/',checkout_cart,name='checkout')
-    
+    path('signup/',user_signup,name='signup'),    
     
 ]

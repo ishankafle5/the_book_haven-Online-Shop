@@ -218,8 +218,12 @@ class AddToCart(LoginRequiredMixin,TemplateView):
                 cart_product=CartProducts.objects.filter(cart=object)
                 for i in cart_product:
                     product_qty=i.product.quantity
-                    order_quantity=i.quantity
-                    i.product.quantity= product_qty-order_quantity
+                    product_id=i.product.id
+                    product=Product.objects.get(id=product_id)
+                    product.quantity=product_qty-i.quantity
+                    product.save()
+                    # order_quantity=i.quantity
+                    # i.product.quantity= product_qty-order_quantity
                     i.save()
                 form.save()
                 object.ordered=True
@@ -362,4 +366,16 @@ def returnform(request):
     form=OrderForm()
     return form
         # if form.is_valid():form.save()
+        
+
+def total_amt_and_discount(request):
+    cart_id=request.session.get('cart_id')
+    cart=Cart.objects.get(id=cart_id)
+    cart_products=CartProducts.objects.filter(cart=cart)
+    final_amt=0
+    marked_price=0
+    for i in cart_products:
+        final_amt=i.product.selling_price + final_amt
+        marked_price=i.product.marked_price + marked_price
+    return HttpResponse(JsonResponse({'marked_price':marked_price,'final_amt':final_amt}))
         
