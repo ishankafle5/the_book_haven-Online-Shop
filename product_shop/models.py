@@ -10,7 +10,7 @@ def upload_to(instance, filname):
 
 class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    fullname = models.CharField(max_length=255)
+    fullname = models.CharField(max_length=255,blank=True,null= None,default=None)
     quantity = models.IntegerField(default=0)
     price = models.IntegerField(default=0)
 

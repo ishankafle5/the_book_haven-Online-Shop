@@ -4,15 +4,52 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 # Create your views here.
 from .models import Cart, CartProducts, Product, Category
-from .forms import OrderForm
+from .forms import LoginForm, OrderForm, SignupForm
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-class HomeView(TemplateView):
+from django.contrib.auth.views import LoginView
+
+def user_login(request):
+    if request.method == 'GET':
+        form=LoginForm()
+        return render(request,'registration/login.html')
+    
+    if request.method == 'POST':
+        return HttpResponse("")
+
+
+class CustomLoginView(LoginView):
+    def get_success_url(self):
+        # Add your custom logic here
+        if self.request.user.is_staff:
+            return '/admin'
+        else:
+            return '/'  # Redirect to user profile if user is not staff
+
+def user_signup(request):
+    if request.method == 'GET':
+        form = SignupForm()
+        return render(request,'registration/signup.html',{"form":form})
+    if request.method =='POST':
+        form=SignupForm(request.POST)
+        if form.is_valid():
+            form.save()
+        else:
+            return render(request,'registration/signup.html',{'form',form})
+
+
+class HomeView(LoginRequiredMixin,TemplateView):
+    login_url='/login'
     template_name = 'shop/home.html'
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # return super().get_context_data(**kwargs)
+        
+
+        
+        print(self.request.session)
         product = Product.objects.all()
 
         context['product'] = product
@@ -20,20 +57,23 @@ class HomeView(TemplateView):
         return context
 
 
-class AllProductView(TemplateView):
+class AllProductView(LoginRequiredMixin,TemplateView):
+    login_url='/login'
     template_name = 'shop/allproducts.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # return super().get_context_data(**kwargs)
         category = Category.objects.all()
+        
 
         context['category'] = category
 
         return context
 
 
-class CategoryView(TemplateView):
+class CategoryView(LoginRequiredMixin,TemplateView):
+    login_url='/login'
     template_name = 'shop/allproducts.html'
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
@@ -45,7 +85,8 @@ class CategoryView(TemplateView):
         context['catproduct'] = product_obj
         return context
 
-class EachProducts(TemplateView):
+class EachProducts(LoginRequiredMixin,TemplateView):
+    login_url='/login'
     template_name = 'shop/eachproduct.html'
 
     def get_context_data(self, **kwargs):
@@ -69,7 +110,8 @@ class EachProducts(TemplateView):
 #         count += 14
 
 
-class AddToCart(TemplateView):
+class AddToCart(LoginRequiredMixin,TemplateView):
+    login_url='/login'
 
     template_name = 'shop/addtocart.html'
 
@@ -118,7 +160,7 @@ class AddToCart(TemplateView):
             print("Now")
             return context  # print(update_productqunatity)
         else:
-            cart_obj = Cart.objects.create(total=0)
+            cart_obj = Cart.objects.create(total=0,user=self.request.user)
             self.request.session['cart_id'] = cart_obj.id
             card_product = CartProducts.objects.create(
                 cart=cart_obj,
@@ -159,7 +201,8 @@ class CheckoutForm(TemplateView):
     template_name = 'shop/checkoutpage.html'
 
 
-class CheckOut(TemplateView):
+class CheckOut(LoginRequiredMixin,TemplateView):
+    login_url='/login'
     template_name = 'shop/checkoutpage.html'
 
     def get_context_data(self, **kwargs):
@@ -186,7 +229,8 @@ class CheckOut(TemplateView):
         return context
 
 
-class SearchProducts(TemplateView):
+class SearchProducts(LoginRequiredMixin,TemplateView):
+    login_url='/login'
     template_name = 'shop/home.html'
 
     def post(self, request, *args, **kwargs):
@@ -270,7 +314,7 @@ class ChangeQuantity():
 
         pass
 # def returnForm(rsequest):
-
+@login_required
 def returnform(request):
     cart_id=request.session['cart_id']
     
