@@ -1,27 +1,38 @@
 from typing import Any, Dict
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.views.generic import TemplateView
 # Create your views here.
-from .models import Cart, CartProducts, Product, Category
+from .models import Cart, CartProducts, Customer, Product, Category
 from .forms import LoginForm, OrderForm, SignupForm
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from .forms import OrderForm
 
 from django.contrib.auth.views import LoginView
 
-def user_login(request):
-    if request.method == 'GET':
-        form=LoginForm()
-        return render(request,'registration/login.html')
-    
-    if request.method == 'POST':
-        return HttpResponse("")
+# def user_login(request):
 
+        
+#     if request.method == 'GET':
+#         if request.user.is_staff:
+#             redirect('/')
+#         form=LoginForm()
+#         return render(request,'registration/login.html')
+    
+ 
 
 class CustomLoginView(LoginView):
+    def dispatch(self,request,*args,**kwargs):
+        if self.request.user.is_authenticated:
+            return redirect('/')
+
+        return super().dispatch(request,*args,**kwargs)
+    
+    
     def get_success_url(self):
+        
         # Add your custom logic here
         if self.request.user.is_staff:
             return '/admin'
@@ -36,12 +47,12 @@ def user_signup(request):
         form=SignupForm(request.POST)
         if form.is_valid():
             form.save()
+            return redirect('/login')
         else:
-            return render(request,'registration/signup.html',{'form',form})
+            return render(request,'registration/signup.html',{'form':form})
 
-
-class HomeView(LoginRequiredMixin,TemplateView):
-    login_url='/login'
+class HomeView(TemplateView):
+    # login_url='/login'
     template_name = 'shop/home.html'
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -160,7 +171,24 @@ class AddToCart(LoginRequiredMixin,TemplateView):
             print("Now")
             return context  # print(update_productqunatity)
         else:
-            cart_obj = Cart.objects.create(total=0,user=self.request.user)
+            print(self.request.user)
+            print("THis is user")
+            if self.request.user:
+                try:
+                    customer=Customer.objects.get(user=self.request.user)
+                except:
+                    customer=Customer.objects.create(user=self.request.user)
+
+            else:
+                customer_obj=Customer.objects.create(user=self.request.user,fullname='')
+
+                redirect('/login')
+            if customer:
+                cart_obj = Cart.objects.create(total=0,user=customer)
+            else:            
+                customer_obj=Customer.objects.create(user=self.request.user,fullname='')
+                cart_obj = Cart.objects.create(total=0,user=customer_obj)
+
             self.request.session['cart_id'] = cart_obj.id
             card_product = CartProducts.objects.create(
                 cart=cart_obj,
@@ -179,18 +207,25 @@ class AddToCart(LoginRequiredMixin,TemplateView):
             return context
     def post(self,request,id):
         cart_id=self.request.session['cart_id']
-        print(id)
         print("Post Method is come")
         if self.request.method=='POST':
             
-            cart_id=(self.request.POST.get('cart'))
+            cart_id=self.request.POST.get('cart')
             object=Cart.objects.get(id=cart_id)
             print(request.method)
             form=OrderForm(self.request.POST)
             if form.is_valid():
+                cart_product=CartProducts.objects.filter(cart=object)
+                for i in cart_product:
+                    product_qty=i.product.quantity
+                    order_quantity=i.quantity
+                    i.product.quantity= product_qty-order_quantity
+                    i.save()
                 form.save()
-                object.delete()
-                return HttpResponse("Success")
+                object.ordered=True
+                object.save()
+                del request.session['cart_id']
+                return HttpResponse("Your Order is on the way now")
             else:
                 return HttpResponse("form invalid")
         else:
@@ -203,7 +238,7 @@ class CheckoutForm(TemplateView):
 
 class CheckOut(LoginRequiredMixin,TemplateView):
     login_url='/login'
-    template_name = 'shop/checkoutpage.html'
+    template_name = 'shop/deliverydetail.html'
 
     def get_context_data(self, **kwargs):
         cart_id = self.request.session.get('cart_id')
@@ -227,10 +262,16 @@ class CheckOut(LoginRequiredMixin,TemplateView):
         cartobject.ordered = True
         cartobject.save()
         return context
+    def post(self):
+        form=OrderForm(self.request.POST)
+        if(form.is_valid()):
+            form.save()
+        else:
+            print("Error")
+        
 
 
-class SearchProducts(LoginRequiredMixin,TemplateView):
-    login_url='/login'
+class SearchProducts(TemplateView):
     template_name = 'shop/home.html'
 
     def post(self, request, *args, **kwargs):

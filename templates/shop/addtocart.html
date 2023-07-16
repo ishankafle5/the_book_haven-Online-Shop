@@ -116,8 +116,8 @@
 <div id="main-checkout" class="main-checkout">
   <div class="checkoutform">
       <div class="container">
-          <form method="POST" action="">
-            {% order_form request%}
+          <form method="POST" >
+            {% order_form request %}
             {% csrf_token %}
             <div class="button-checkout-from">
               <button type="summit">CheckOut</button>

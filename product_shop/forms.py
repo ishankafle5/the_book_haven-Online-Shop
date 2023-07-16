@@ -33,6 +33,7 @@ class LoginForm(forms.ModelForm):
      
 class SignupForm(UserCreationForm):
     email = forms.EmailField()
+    profile=forms.ImageField()
     class Meta:
         model=User
         fields = ('username', 'email', 'password1', 'password2')     

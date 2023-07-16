@@ -10,12 +10,11 @@
 {% else %}
 <p>Please, use the following form to log-in: </p>
 {% endif %}
-<div class="login-form">
+<div class="signup-form">
     <form action="{% url 'shopapp:signup' %}" method="post">
         {{form.as_p}}
         {% csrf_token %}
-        <input type="hidden" name="next" value="{{next}}">
-        <p><input type="submit" value="Log-in"></p>
+        <p><input type="submit" value="Sign Up"></p>
     </form>
 </div>
 {% endblock content %}
